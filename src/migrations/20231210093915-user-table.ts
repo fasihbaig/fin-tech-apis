@@ -40,6 +40,10 @@ export async function up(queryInterface: QueryInterface): Promise<void> {
       allowNull: false,
       defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
     },
+    deleted_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    }
   });
 }
 
