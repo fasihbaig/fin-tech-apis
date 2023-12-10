@@ -53,4 +53,15 @@ export class UserService {
       where: { id: { [Op.eq]: id } }
     })
   }
+
+  /**
+   * 
+   * @param { number } id 
+   * @returns { Promise<number> }
+   */
+  remove(id: number): Promise<number> {
+    return this.userModel.destroy({
+      where: { id: { [Op.eq]: id } }
+    })
+  }
 }
