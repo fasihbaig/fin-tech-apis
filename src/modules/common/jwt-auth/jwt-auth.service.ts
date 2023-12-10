@@ -1,10 +1,10 @@
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Scope } from "@nestjs/common";
 import { JWT_PAYLOAD } from "./types";
 import { OnEvent } from "@nestjs/event-emitter";
 
-@Injectable()
+@Injectable({scope: Scope.DEFAULT})
 export class JwtAuthService {
     constructor(
         private jwtService: JwtService,

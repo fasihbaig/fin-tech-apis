@@ -23,7 +23,7 @@ export class JwtAuthGuard implements CanActivate {
       }
 
       const payload = await this.eventEmitter.emitAsync('VERIFY_TOKEN', { token: req.headers.token});
-      const decodedPayload = payload
+      const decodedPayload = payload[0]
       req.user = decodedPayload;
       return true;
     } catch (error) {
