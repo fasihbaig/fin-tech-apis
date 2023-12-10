@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { AccountModule } from './modules/account/account.module';
 import { CommonModule } from './modules/common/common.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './modules/auth/auth.module';
     AccountModule,
     CommonModule,
     AuthModule,
+    TransactionModule,
   ],
   controllers: [
     AppController
