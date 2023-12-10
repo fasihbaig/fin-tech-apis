@@ -13,6 +13,12 @@ export class User extends Model {
   username: string;
 
   @Column({
+    allowNull: false, 
+    unique: true, 
+  })
+  email: string;
+
+  @Column({
      allowNull: false, 
      field: "first_name" 
   })
@@ -29,10 +35,12 @@ export class User extends Model {
   password: string;
 
   @CreatedAt
-  @Column
+  @Column({
+    field: "created_at" 
+  })
   createdAt!: Date;
 
   @UpdatedAt
-  @Column
+  @Column({field: "updated_at"})
   updatedAt!: Date;
 }
