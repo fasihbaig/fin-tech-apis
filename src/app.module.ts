@@ -21,6 +21,7 @@ import { UserModule } from './modules/user/user.module';
       }),
       inject: [ConfigService],
     }),
+    UserModule,
   ],
   controllers: [
     AppController
