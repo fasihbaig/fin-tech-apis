@@ -32,6 +32,6 @@ export class JwtAuthService {
      * @returns { Promise<JWT_PAYLOAD> }
      */
     public async verifyToken(token: string): Promise<JWT_PAYLOAD> {
-       return this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET"),})
+       return this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET")})
     }
 }
