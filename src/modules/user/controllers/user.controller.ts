@@ -2,8 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, Req, Unauth
 import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { JwtAuthGuard } from 'src/modules/common/jwt-guard/jwt-auth.guard';
-import { User } from 'src/modules/database/entities';
+import { JwtAuthGuard } from '../../../modules/common/jwt-guard/jwt-auth.guard';
 import { get } from 'lodash';
 
 
