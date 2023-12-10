@@ -37,6 +37,7 @@ export async function up(queryInterface: QueryInterface): Promise<void> {
     deleted_at: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: null
     }
   }, {
     uniqueKeys: {"user_unique_account_type": { fields: ["user_id", "account_type"] }}
