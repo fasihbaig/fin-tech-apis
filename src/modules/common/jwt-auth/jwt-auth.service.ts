@@ -2,6 +2,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { Injectable } from "@nestjs/common";
 import { JWT_PAYLOAD } from "./types";
+import { OnEvent } from "@nestjs/event-emitter";
 
 @Injectable()
 export class JwtAuthService {
@@ -33,5 +34,10 @@ export class JwtAuthService {
      */
     public async verifyToken(token: string): Promise<JWT_PAYLOAD> {
        return this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET")})
+    }
+
+    @OnEvent('VERIFY_TOKEN')
+    public async subscribeVerifyJwtToken(payload: {token: string}) {
+      return this.verifyToken(payload.token);
     }
 }

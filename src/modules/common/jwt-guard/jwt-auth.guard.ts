@@ -1,11 +1,12 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtAuthService } from '../jwt-auth/jwt-auth.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor( 
-    private jwtAuthService: JwtAuthService
+    private eventEmitter: EventEmitter2
   ) {}
 
   /**
@@ -20,7 +21,9 @@ export class JwtAuthGuard implements CanActivate {
       if( !req.headers.token ) {
         throw new UnauthorizedException("Your are not authorized to perform this operation.");
       }
-      const decodedPayload = await this.jwtAuthService.verifyToken(req.headers.token);
+
+      const payload = await this.eventEmitter.emitAsync('VERIFY_TOKEN', { token: req.headers.token});
+      const decodedPayload = payload
       req.user = decodedPayload;
       return true;
     } catch (error) {
