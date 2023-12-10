@@ -27,7 +27,7 @@ export async function up(queryInterface: QueryInterface): Promise<void> {
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     created_at: {
