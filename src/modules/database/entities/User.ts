@@ -1,6 +1,9 @@
 import { Column, Model, Table, HasMany, CreatedAt, UpdatedAt } from 'sequelize-typescript';
 
-@Table({ tableName: "users" })
+@Table({ 
+  tableName: "users",
+  paranoid: true
+ })
 export class User extends Model {
   @Column({ 
     primaryKey: true, 
@@ -43,4 +46,7 @@ export class User extends Model {
   @UpdatedAt
   @Column({field: "updated_at"})
   updatedAt!: Date;
+
+  @Column({field: "deleted_at"})
+  deletedAt: Date;
 }
