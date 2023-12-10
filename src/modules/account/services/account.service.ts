@@ -73,7 +73,7 @@ export class AccountService {
         return this.accountModel.increment({
           balance: amount,
         }, { 
-          where: { accountId: { [Op.eq]: accountId} },
+          where: { id: { [Op.eq]: accountId } },
           transaction
         });  
 
@@ -81,7 +81,7 @@ export class AccountService {
         return this.accountModel.decrement({
           balance: amount,
         }, { 
-          where: { accountId: { [Op.eq]: accountId} },
+          where: { id: { [Op.eq]: accountId} },
           transaction
         }); 
 
@@ -93,18 +93,22 @@ export class AccountService {
   /**
    * 
    * @param { number } accountId 
+   * @param { number } userId
    * @returns { Promise<number>}
    */
-  public async getUserIdAgainstAccountNumber(accountId: number): Promise<number> {
+  public async getUserIdAgainstAccountNumber(accountId: number, userId: number): Promise<Account> {
     const account = await this.accountModel.findOne({
-      attributes: ["userId"],
-      where: { id: { [Op.eq]: accountId} }
+      attributes: ["userId", "balance"],
+      where: { 
+        id: { [Op.eq]: accountId },
+        userId: { [Op.eq]: userId }
+      }
     });
 
     if(!account) {
       throw new BadRequestException("Invalid AccountID passed")
     }
 
-    return account.get("userId");
+    return account;
   }
 }
