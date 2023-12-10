@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { CreateAccountDto } from '../dto/create-account.dto';
-import { UpdateAccountDto } from '../dto/update-account.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Account } from 'src/modules/database/entities';
+import { Op } from 'sequelize';
+import { JwtAuthGuard } from '../../../modules/common/jwt-guard/jwt-auth.guard';
 
 @Injectable()
 export class AccountService {
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
+
+  constructor(
+    @InjectModel(Account) private accountModel: typeof Account,
+  ) {}
+
+  @UseGuards(JwtAuthGuard)
+  create(createAccountDto: Partial<CreateAccountDto>) {
+    if(!createAccountDto.balance) {
+      createAccountDto.balance = 0;
+    }
+    return this.accountModel.create(createAccountDto)
   }
 
-  findAll() {
-    return `This action returns all account`;
-  }
-
+  @UseGuards(JwtAuthGuard)
   findOne(id: number) {
-    return `This action returns a #${id} account`;
-  }
-
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} account`;
+    return this.accountModel.findOne({
+      where: {
+        id: { [Op.eq]: id }
+      }
+    })
   }
 }
