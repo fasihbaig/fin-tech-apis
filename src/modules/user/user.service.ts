@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../database/entities';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -11,25 +12,45 @@ export class UserService {
     @InjectModel(User) private userModel: typeof User
   ) {}
 
+  /**
+   * 
+   * @param { Partial<CreateUserDto> } createUserDto 
+   * @returns { Promise<User> }
+   */
   create(
     createUserDto: Partial<CreateUserDto>
-  ) {
+  ): Promise<User> {
     return this.userModel.create(createUserDto);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  /**
+   * 
+   * @returns { Promise<User[]> } 
+   */
+  findAll(): Promise<User[]> {
+    return this.userModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  /**
+   * 
+   * @param { number } id 
+   * @returns { Promise<User | null> }
+   */
+  findOne(id: number): Promise<User | null> {
+    return this.userModel.findOne({ 
+      where: { id:{ [Op.eq]: id } }
+    })
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  /**
+   * 
+   * @param { number } id 
+   * @param { UpdateUserDto } updateUserDto 
+   * @returns 
+   */
+  update(id: number, updateUserDto: UpdateUserDto): Promise<[number]> {
+    return this.userModel.update(updateUserDto, {
+      where: { id: { [Op.eq]: id } }
+    })
   }
 }
