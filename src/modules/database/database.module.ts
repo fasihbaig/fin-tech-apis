@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './entities';
+import { Account, User } from './entities';
 
-const models = [User]
+const models = [
+    User, 
+    Account
+];
+
 const databaseModule = SequelizeModule.forFeature(models);
 @Module({
     imports: [
